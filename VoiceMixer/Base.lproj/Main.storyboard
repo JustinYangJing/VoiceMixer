@@ -1,14 +1,19 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -16,11 +21,155 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gmK-hU-2dz">
+                                <rect key="frame" x="172" y="50" width="30" height="30"/>
+                                <state key="normal" title="Play"/>
+                                <state key="selected" title="Stop"/>
+                                <connections>
+                                    <action selector="playHandle:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jZm-VT-CpP"/>
+                                </connections>
+                            </button>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="dru-9n-P2f">
+                                <rect key="frame" x="98.5" y="96" width="241.5" height="31"/>
+                                <connections>
+                                    <action selector="volumeHandle:" destination="BYZ-38-t0r" eventType="valueChanged" id="fB8-r3-Ldv"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="混音音量" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wfM-qr-Pbz">
+                                <rect key="frame" x="16" y="96" width="69.5" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="bus0 控制" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OWz-7L-klX">
+                                <rect key="frame" x="16" y="151" width="78" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q1E-8M-m5v">
+                                <rect key="frame" x="26" y="188" width="51" height="31"/>
+                                <connections>
+                                    <action selector="busEnableHandle:" destination="BYZ-38-t0r" eventType="valueChanged" id="mZe-6V-5gp"/>
+                                </connections>
+                            </switch>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="DxU-9D-e1S">
+                                <rect key="frame" x="99" y="189" width="249" height="31"/>
+                                <connections>
+                                    <action selector="busVolumeHandle:" destination="BYZ-38-t0r" eventType="valueChanged" id="S8W-Ui-sEK"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="bus1 控制" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iVD-uI-WyW">
+                                <rect key="frame" x="16" y="240" width="74.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vB2-uP-PXm">
+                                <rect key="frame" x="26" y="277" width="51" height="31"/>
+                                <connections>
+                                    <action selector="busEnableHandle:" destination="BYZ-38-t0r" eventType="valueChanged" id="9Pf-tU-8XY"/>
+                                </connections>
+                            </switch>
+                            <slider opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="tLE-LP-BbL">
+                                <rect key="frame" x="99" y="277.5" width="249" height="31"/>
+                                <connections>
+                                    <action selector="busVolumeHandle:" destination="BYZ-38-t0r" eventType="valueChanged" id="WR8-8b-XOc"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="bus2 控制" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8EX-AR-khQ">
+                                <rect key="frame" x="16" y="337" width="78" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Urt-pd-Sp4">
+                                <rect key="frame" x="26" y="374" width="51" height="31"/>
+                                <connections>
+                                    <action selector="busEnableHandle:" destination="BYZ-38-t0r" eventType="valueChanged" id="XDS-0i-AEI"/>
+                                </connections>
+                            </switch>
+                            <slider opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="2Bh-Lf-Vqj">
+                                <rect key="frame" x="99" y="374.5" width="249" height="31"/>
+                                <connections>
+                                    <action selector="busVolumeHandle:" destination="BYZ-38-t0r" eventType="valueChanged" id="XmA-Nn-BBs"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="bus3 控制" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HLK-tG-Sjs">
+                                <rect key="frame" x="16" y="429" width="78" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" tag="3" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6zX-A2-nz9">
+                                <rect key="frame" x="26" y="466" width="51" height="31"/>
+                                <connections>
+                                    <action selector="busEnableHandle:" destination="BYZ-38-t0r" eventType="valueChanged" id="cF2-BS-iE7"/>
+                                </connections>
+                            </switch>
+                            <slider opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="XXd-Jh-9Yp">
+                                <rect key="frame" x="99" y="466.5" width="249" height="31"/>
+                                <connections>
+                                    <action selector="busVolumeHandle:" destination="BYZ-38-t0r" eventType="valueChanged" id="Y4w-iw-my8"/>
+                                </connections>
+                            </slider>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="dru-9n-P2f" firstAttribute="top" secondItem="gmK-hU-2dz" secondAttribute="bottom" constant="16" id="19H-bW-kOb"/>
+                            <constraint firstItem="tLE-LP-BbL" firstAttribute="leading" secondItem="vB2-uP-PXm" secondAttribute="trailing" constant="26" id="1M8-j1-2Xu"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="OWz-7L-klX" secondAttribute="leading" id="3bD-m9-sKP"/>
+                            <constraint firstItem="Q1E-8M-m5v" firstAttribute="top" secondItem="OWz-7L-klX" secondAttribute="bottom" constant="16" id="5Ld-j0-Sen"/>
+                            <constraint firstItem="dru-9n-P2f" firstAttribute="top" secondItem="wfM-qr-Pbz" secondAttribute="top" id="7SI-Se-X2G"/>
+                            <constraint firstItem="iVD-uI-WyW" firstAttribute="leading" secondItem="OWz-7L-klX" secondAttribute="leading" id="AJN-Al-CDg"/>
+                            <constraint firstItem="tLE-LP-BbL" firstAttribute="centerY" secondItem="vB2-uP-PXm" secondAttribute="centerY" id="Bon-sq-EoT"/>
+                            <constraint firstItem="dru-9n-P2f" firstAttribute="centerY" secondItem="wfM-qr-Pbz" secondAttribute="centerY" id="DyF-ij-fyX"/>
+                            <constraint firstItem="DxU-9D-e1S" firstAttribute="leading" secondItem="Q1E-8M-m5v" secondAttribute="trailing" constant="26" id="Elv-sw-Etf"/>
+                            <constraint firstItem="6zX-A2-nz9" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="10" id="Eoh-Ze-yP9"/>
+                            <constraint firstItem="vB2-uP-PXm" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="10" id="Ezc-wb-iaQ"/>
+                            <constraint firstItem="2Bh-Lf-Vqj" firstAttribute="leading" secondItem="Urt-pd-Sp4" secondAttribute="trailing" constant="26" id="FTs-XV-w1F"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="tLE-LP-BbL" secondAttribute="trailing" constant="13" id="FZ3-Qk-Xg0"/>
+                            <constraint firstItem="8EX-AR-khQ" firstAttribute="leading" secondItem="OWz-7L-klX" secondAttribute="leading" id="Gz1-A5-ujV"/>
+                            <constraint firstItem="8EX-AR-khQ" firstAttribute="top" secondItem="vB2-uP-PXm" secondAttribute="bottom" constant="29" id="JYv-hQ-GUZ"/>
+                            <constraint firstItem="vB2-uP-PXm" firstAttribute="top" secondItem="iVD-uI-WyW" secondAttribute="bottom" constant="16" id="Kdn-RZ-Kd5"/>
+                            <constraint firstItem="Urt-pd-Sp4" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="10" id="MiZ-Cc-qaU"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="dru-9n-P2f" secondAttribute="trailing" constant="21" id="NO5-yM-1t5"/>
+                            <constraint firstItem="6zX-A2-nz9" firstAttribute="top" secondItem="HLK-tG-Sjs" secondAttribute="bottom" constant="16" id="OG9-W9-ZTr"/>
+                            <constraint firstItem="HLK-tG-Sjs" firstAttribute="top" secondItem="Urt-pd-Sp4" secondAttribute="bottom" constant="24" id="QAC-SF-ZMV"/>
+                            <constraint firstItem="DxU-9D-e1S" firstAttribute="centerY" secondItem="Q1E-8M-m5v" secondAttribute="centerY" id="Rvj-Ci-2M2"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="wfM-qr-Pbz" secondAttribute="leading" id="RyT-sx-kVB"/>
+                            <constraint firstItem="XXd-Jh-9Yp" firstAttribute="leading" secondItem="6zX-A2-nz9" secondAttribute="trailing" constant="26" id="X8U-Nm-9Sc"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="DxU-9D-e1S" secondAttribute="trailing" constant="13" id="arU-hm-DKF"/>
+                            <constraint firstItem="OWz-7L-klX" firstAttribute="top" secondItem="wfM-qr-Pbz" secondAttribute="bottom" constant="25" id="axl-Dx-fFp"/>
+                            <constraint firstItem="XXd-Jh-9Yp" firstAttribute="centerY" secondItem="6zX-A2-nz9" secondAttribute="centerY" id="b5l-WX-ibO"/>
+                            <constraint firstItem="gmK-hU-2dz" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="30" id="cyZ-Q6-G1G"/>
+                            <constraint firstItem="iVD-uI-WyW" firstAttribute="top" secondItem="Q1E-8M-m5v" secondAttribute="bottom" constant="21" id="dNh-tr-uDS"/>
+                            <constraint firstItem="2Bh-Lf-Vqj" firstAttribute="centerY" secondItem="Urt-pd-Sp4" secondAttribute="centerY" id="fls-8c-Enq"/>
+                            <constraint firstItem="dru-9n-P2f" firstAttribute="leading" secondItem="wfM-qr-Pbz" secondAttribute="trailing" constant="15" id="m2Q-rT-SJw"/>
+                            <constraint firstItem="gmK-hU-2dz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="oTQ-Uq-TtH"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="2Bh-Lf-Vqj" secondAttribute="trailing" constant="13" id="pqC-zR-VQp"/>
+                            <constraint firstItem="HLK-tG-Sjs" firstAttribute="leading" secondItem="OWz-7L-klX" secondAttribute="leading" id="qWN-f1-zmp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="XXd-Jh-9Yp" secondAttribute="trailing" constant="13" id="rQ4-8m-aTT"/>
+                            <constraint firstItem="Q1E-8M-m5v" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="10" id="rQE-k2-REd"/>
+                            <constraint firstItem="Urt-pd-Sp4" firstAttribute="top" secondItem="8EX-AR-khQ" secondAttribute="bottom" constant="16" id="uSv-Ad-L6d"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="bu1Switch" destination="vB2-uP-PXm" id="F8z-kz-Xzu"/>
+                        <outlet property="bus0Swith" destination="Q1E-8M-m5v" id="EWa-H9-K65"/>
+                        <outlet property="bus0Volume" destination="DxU-9D-e1S" id="9t4-Z7-1ds"/>
+                        <outlet property="bus1Volume" destination="tLE-LP-BbL" id="b8r-rm-jIG"/>
+                        <outlet property="bus2Switch" destination="Urt-pd-Sp4" id="FOj-4D-hn5"/>
+                        <outlet property="bus2Volume" destination="2Bh-Lf-Vqj" id="C4g-0c-ynM"/>
+                        <outlet property="bus3Switch" destination="6zX-A2-nz9" id="y87-GS-S7f"/>
+                        <outlet property="bus3Volume" destination="XXd-Jh-9Yp" id="1pb-gD-uke"/>
+                        <outlet property="mixVolume" destination="dru-9n-P2f" id="ZhI-k5-XEy"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="32.799999999999997" y="63.418290854572717"/>
         </scene>
     </scenes>
 </document>

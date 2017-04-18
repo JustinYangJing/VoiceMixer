@@ -13,6 +13,14 @@
 		1B09B3831EA4B7690042DD61 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B09B3811EA4B7690042DD61 /* Main.storyboard */; };
 		1B09B3851EA4B7690042DD61 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B09B3841EA4B7690042DD61 /* Assets.xcassets */; };
 		1B09B3881EA4B7690042DD61 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B09B3861EA4B7690042DD61 /* LaunchScreen.storyboard */; };
+		1B09B3941EA4BEC50042DD61 /* DrumsMonoSTP.aif in Resources */ = {isa = PBXBuildFile; fileRef = 1B09B3901EA4BEC50042DD61 /* DrumsMonoSTP.aif */; };
+		1B09B3951EA4BEC50042DD61 /* GuitarMonoSTP.aif in Resources */ = {isa = PBXBuildFile; fileRef = 1B09B3911EA4BEC50042DD61 /* GuitarMonoSTP.aif */; };
+		1B09B3961EA4BEC50042DD61 /* guitarStereo.caf in Resources */ = {isa = PBXBuildFile; fileRef = 1B09B3921EA4BEC50042DD61 /* guitarStereo.caf */; };
+		1B09B3971EA4BEC50042DD61 /* sound_voices.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1B09B3931EA4BEC50042DD61 /* sound_voices.wav */; };
+		1B09B39F1EA4E9880042DD61 /* CAComponentDescription.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B09B39A1EA4E9880042DD61 /* CAComponentDescription.cpp */; };
+		1B09B3A31EA4E9EB0042DD61 /* MixerVoiceHandle.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1B09B3A21EA4E9EB0042DD61 /* MixerVoiceHandle.mm */; };
+		1B09B3A61EA4EB050042DD61 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B09B3A51EA4EB050042DD61 /* AVFoundation.framework */; };
+		1B09B3A81EA4EB1E0042DD61 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B09B3A71EA4EB1E0042DD61 /* AudioToolbox.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +34,19 @@
 		1B09B3841EA4B7690042DD61 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1B09B3871EA4B7690042DD61 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1B09B3891EA4B7690042DD61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1B09B3901EA4BEC50042DD61 /* DrumsMonoSTP.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = DrumsMonoSTP.aif; sourceTree = "<group>"; };
+		1B09B3911EA4BEC50042DD61 /* GuitarMonoSTP.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = GuitarMonoSTP.aif; sourceTree = "<group>"; };
+		1B09B3921EA4BEC50042DD61 /* guitarStereo.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = guitarStereo.caf; sourceTree = "<group>"; };
+		1B09B3931EA4BEC50042DD61 /* sound_voices.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sound_voices.wav; sourceTree = "<group>"; };
+		1B09B3991EA4E9880042DD61 /* CACFDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACFDictionary.h; sourceTree = "<group>"; };
+		1B09B39A1EA4E9880042DD61 /* CAComponentDescription.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAComponentDescription.cpp; sourceTree = "<group>"; };
+		1B09B39B1EA4E9880042DD61 /* CAComponentDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAComponentDescription.h; sourceTree = "<group>"; };
+		1B09B39C1EA4E9880042DD61 /* CADebugMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADebugMacros.h; sourceTree = "<group>"; };
+		1B09B3A11EA4E9EB0042DD61 /* MixerVoiceHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixerVoiceHandle.h; sourceTree = "<group>"; };
+		1B09B3A21EA4E9EB0042DD61 /* MixerVoiceHandle.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MixerVoiceHandle.mm; sourceTree = "<group>"; };
+		1B09B3A51EA4EB050042DD61 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		1B09B3A71EA4EB1E0042DD61 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		1B09B3A91EA4F3380042DD61 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +54,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B09B3A81EA4EB1E0042DD61 /* AudioToolbox.framework in Frameworks */,
+				1B09B3A61EA4EB050042DD61 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +67,7 @@
 			children = (
 				1B09B3771EA4B7680042DD61 /* VoiceMixer */,
 				1B09B3761EA4B7680042DD61 /* Products */,
+				1B09B3A41EA4EB050042DD61 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,6 +90,10 @@
 				1B09B3841EA4B7690042DD61 /* Assets.xcassets */,
 				1B09B3861EA4B7690042DD61 /* LaunchScreen.storyboard */,
 				1B09B3891EA4B7690042DD61 /* Info.plist */,
+				1B09B3A11EA4E9EB0042DD61 /* MixerVoiceHandle.h */,
+				1B09B3A21EA4E9EB0042DD61 /* MixerVoiceHandle.mm */,
+				1B09B3981EA4E9880042DD61 /* PublicUtility */,
+				1B09B38F1EA4BEC50042DD61 /* Resource */,
 				1B09B3781EA4B7680042DD61 /* Supporting Files */,
 			);
 			path = VoiceMixer;
@@ -74,9 +102,41 @@
 		1B09B3781EA4B7680042DD61 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				1B09B3A91EA4F3380042DD61 /* PrefixHeader.pch */,
 				1B09B3791EA4B7680042DD61 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1B09B38F1EA4BEC50042DD61 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				1B09B3901EA4BEC50042DD61 /* DrumsMonoSTP.aif */,
+				1B09B3911EA4BEC50042DD61 /* GuitarMonoSTP.aif */,
+				1B09B3921EA4BEC50042DD61 /* guitarStereo.caf */,
+				1B09B3931EA4BEC50042DD61 /* sound_voices.wav */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		1B09B3981EA4E9880042DD61 /* PublicUtility */ = {
+			isa = PBXGroup;
+			children = (
+				1B09B3991EA4E9880042DD61 /* CACFDictionary.h */,
+				1B09B39A1EA4E9880042DD61 /* CAComponentDescription.cpp */,
+				1B09B39B1EA4E9880042DD61 /* CAComponentDescription.h */,
+				1B09B39C1EA4E9880042DD61 /* CADebugMacros.h */,
+			);
+			path = PublicUtility;
+			sourceTree = "<group>";
+		};
+		1B09B3A41EA4EB050042DD61 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1B09B3A71EA4EB1E0042DD61 /* AudioToolbox.framework */,
+				1B09B3A51EA4EB050042DD61 /* AVFoundation.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -111,7 +171,7 @@
 					1B09B3741EA4B7680042DD61 = {
 						CreatedOnToolsVersion = 8.3;
 						DevelopmentTeam = WU2WFZ2B66;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -138,9 +198,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B09B3971EA4BEC50042DD61 /* sound_voices.wav in Resources */,
+				1B09B3961EA4BEC50042DD61 /* guitarStereo.caf in Resources */,
 				1B09B3881EA4B7690042DD61 /* LaunchScreen.storyboard in Resources */,
+				1B09B3941EA4BEC50042DD61 /* DrumsMonoSTP.aif in Resources */,
 				1B09B3851EA4B7690042DD61 /* Assets.xcassets in Resources */,
 				1B09B3831EA4B7690042DD61 /* Main.storyboard in Resources */,
+				1B09B3951EA4BEC50042DD61 /* GuitarMonoSTP.aif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,7 +216,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B09B3801EA4B7680042DD61 /* ViewController.m in Sources */,
+				1B09B3A31EA4E9EB0042DD61 /* MixerVoiceHandle.mm in Sources */,
 				1B09B37D1EA4B7680042DD61 /* AppDelegate.m in Sources */,
+				1B09B39F1EA4E9880042DD61 /* CAComponentDescription.cpp in Sources */,
 				1B09B37A1EA4B7680042DD61 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -274,10 +340,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = WU2WFZ2B66;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/VoiceMixer/PrefixHeader.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INFOPLIST_FILE = VoiceMixer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Het.VoiceMixer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "a29f7b71-a23e-4c81-a3ee-d62e0a0a1b7b";
+				PROVISIONING_PROFILE_SPECIFIER = developAll;
 			};
 			name = Debug;
 		};
@@ -286,10 +358,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = WU2WFZ2B66;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/VoiceMixer/PrefixHeader.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INFOPLIST_FILE = VoiceMixer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Het.VoiceMixer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "a29f7b71-a23e-4c81-a3ee-d62e0a0a1b7b";
+				PROVISIONING_PROFILE_SPECIFIER = developAll;
 			};
 			name = Release;
 		};
