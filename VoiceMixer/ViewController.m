@@ -20,6 +20,8 @@
 @property (weak, nonatomic) IBOutlet UISlider *bus1Volume;
 @property (weak, nonatomic) IBOutlet UISlider *bus2Volume;
 @property (weak, nonatomic) IBOutlet UISlider *bus3Volume;
+@property (weak, nonatomic) IBOutlet UISwitch *bus4Switch;
+@property (weak, nonatomic) IBOutlet UISlider *bus4Volume;
 @end
 
 @implementation ViewController
@@ -39,10 +41,12 @@
     [self.mixerHandle enableInput:1 isOn:self.bu1Switch.isOn];
     [self.mixerHandle enableInput:2 isOn:self.bus2Switch.isOn];
     [self.mixerHandle enableInput:3 isOn:self.bus3Switch.isOn];
+    [self.mixerHandle enableInput:4 isOn:self.bus4Switch.isOn];
     [self.mixerHandle setInputVolumeWithBus:0 value:self.bus0Volume.value];
     [self.mixerHandle setInputVolumeWithBus:1 value:self.bus1Volume.value];
     [self.mixerHandle setInputVolumeWithBus:2 value:self.bus2Volume.value];
     [self.mixerHandle setInputVolumeWithBus:3 value:self.bus3Volume.value];
+    [self.mixerHandle setInputVolumeWithBus:4 value:self.bus4Volume.value];
     [self.mixerHandle setOutputVolume:self.mixVolume.value];
     
 }
@@ -73,10 +77,22 @@
     if(1 == bus ) self.bus1Volume.enabled = sender.isOn;
     if(2 == bus ) self.bus2Volume.enabled = sender.isOn;
     if(3 == bus ) self.bus3Volume.enabled = sender.isOn;
+    if (4 == bus) self.bus4Volume.enabled = sender.isOn;
 }
 
 - (IBAction)busVolumeHandle:(UISlider *)sender {
     [self.mixerHandle setInputVolumeWithBus:sender.tag value:sender.value];
+}
+- (IBAction)recordMixed:(UIButton *)sender {
+    if (sender.selected) {
+        sender.selected = NO;
+        [self.mixerHandle stopWriteMixedPCM];
+    }else{
+        sender.selected = YES;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [self.mixerHandle startWriteMixedPCM];
+        });
+    }
 }
 
 @end

@@ -87,7 +87,7 @@
     AVAudioSession *sessionInstance = [AVAudioSession sharedInstance];
         
         // our default category -- we change this for conversion and playback appropriately
-    [sessionInstance setCategory:AVAudioSessionCategoryPlayback error:&error];
+    [sessionInstance setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
     handleError(error);
 
         

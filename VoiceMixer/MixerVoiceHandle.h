@@ -29,4 +29,7 @@ void CheckError(OSStatus error,const char *operaton);
 -(void)enableInput:(NSInteger)busIndex isOn:(BOOL)isOn;
 -(void)setInputVolumeWithBus:(NSInteger)busIndex value:(CGFloat)value;
 -(void)setOutputVolume:(AudioUnitParameterValue)value;
+
+-(void)startWriteMixedPCM;
+-(void)stopWriteMixedPCM;
 @end

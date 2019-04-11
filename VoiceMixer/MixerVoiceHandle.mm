@@ -8,6 +8,10 @@
 
 #import "MixerVoiceHandle.h"
 #import "CAComponentDescription.h"
+
+
+
+
 //输出音频的采样率(也是session设置的采样率)，
 const double kGraphSampleRate = 44100.0;
 //每次回调提供多长时间的数据,结合采样率 0.005 = x*1/44100, x = 220.5, 因为回调函数中的inNumberFrames是2的幂，所以x应该是256
@@ -50,7 +54,12 @@ typedef struct {
     AUGraph        _mGraph;
     AudioUnit      _mMixer;
     AudioUnit      _mOutput;
+    BOOL           _recordMixPCM;
+    AudioStreamBasicDescription _mAudioFormat; //输入到文件和录音和混音后的pcm数据的格式
+    dispatch_semaphore_t sem;
+    ExtAudioFileRef   _fp;
     dispatch_queue_t _mQueue;//串行队列,初始化和初始设置音量等操作放到这个队列中，因为加载文件需要比较久，所以都放到了子线程中
+    
 }
 -(instancetype)initWithSourceArr:(NSArray *)sourceArr{
     self = [super init];
@@ -69,7 +78,9 @@ typedef struct {
     }
     return self;
 }
-
+-(void)recordConfig{
+    
+}
 -(void)loadFileIntoMemory{
     
     _mSoundBufferP = (SoundBufferPtr)malloc(sizeof(SoundBuffer) * self.sourceArr.count);
@@ -191,7 +202,48 @@ typedef struct {
     CheckError(AUGraphNodeInfo(_mGraph, outputNode, NULL, &_mOutput),
                "generate remote I/O unit error");
     
-    UInt32 numberOfMixBus = (UInt32)self.sourceArr.count;
+    UInt32 enable = 1;
+    AudioUnitSetProperty(_mOutput,
+                         kAudioOutputUnitProperty_EnableIO,
+                         kAudioUnitScope_Input,
+                         1,
+                         &enable,
+                         sizeof(enable));
+
+    
+    _mAudioFormat.mSampleRate         = kGraphSampleRate;//采样率
+    _mAudioFormat.mFormatID           = kAudioFormatLinearPCM;//PCM采样
+    _mAudioFormat.mFormatFlags        = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked;
+    _mAudioFormat.mFramesPerPacket    = 1;//每个数据包多少帧
+    _mAudioFormat.mChannelsPerFrame   = 1;//1单声道，2立体声
+    _mAudioFormat.mBitsPerChannel     = 16;//语音每采样点占用位数
+    _mAudioFormat.mBytesPerFrame      = _mAudioFormat.mBitsPerChannel*_mAudioFormat.mChannelsPerFrame/8;//每帧的bytes数
+    _mAudioFormat.mBytesPerPacket     = _mAudioFormat.mBytesPerFrame*_mAudioFormat.mFramesPerPacket;//每个数据包的bytes总数，每帧的bytes数＊每个数据包的帧数
+    _mAudioFormat.mReserved           = 0;
+    
+
+    CheckError(AudioUnitSetProperty(_mOutput,
+                                    kAudioUnitProperty_StreamFormat,
+                                    kAudioUnitScope_Output, 1,
+                                    &_mAudioFormat, sizeof(AudioStreamBasicDescription)),
+               "couldn't set the remote I/O unit's input client format");
+    
+
+    
+    AudioUnitSetProperty(_mMixer,
+                         kAudioUnitProperty_StreamFormat,
+                         kAudioUnitScope_Output,
+                         0,
+                         &_mAudioFormat, sizeof(AudioStreamBasicDescription));
+
+
+    
+    CheckError(AudioUnitAddRenderNotify(_mMixer, playUnitInputCallback, (__bridge void *)self),
+               "couldnt set notify");
+    
+   
+    
+    UInt32 numberOfMixBus = (UInt32)self.sourceArr.count + 1;
     
     //配置混音的路数，有多少个音频文件要混音
     CheckError(AudioUnitSetProperty(_mMixer, kAudioUnitProperty_ElementCount, kAudioUnitScope_Input, 0,
@@ -214,23 +266,37 @@ typedef struct {
         // setup render callback struct
         AURenderCallbackStruct rcbs;
         rcbs.inputProc = &renderInput;
-        rcbs.inputProcRefCon = _mSoundBufferP;
+//        rcbs.inputProcRefCon = _mSoundBufferP;
+        rcbs.inputProcRefCon = (__bridge void *)(self);
         
         CheckError(AUGraphSetNodeInputCallback(_mGraph, mixerNode, i, &rcbs),
                    "set mixerNode callback error");
         
-        
+        if (i == numberOfMixBus - 1) {
+
+            CheckError(AudioUnitSetProperty(_mMixer, kAudioUnitProperty_StreamFormat,
+                                            kAudioUnitScope_Input, i,
+                                            &_mAudioFormat, sizeof(AudioStreamBasicDescription)),
+                       "cant set the input scope format for record");
+            break;
+        }
+       
         AVAudioFormat *clientFormat = [[AVAudioFormat alloc] initWithCommonFormat:AVAudioPCMFormatFloat32
                                                                        sampleRate:kGraphSampleRate
                                                                          channels:_mSoundBufferP[i].channelCount
                                                                       interleaved:NO];
+        
         CheckError(AudioUnitSetProperty(_mMixer, kAudioUnitProperty_StreamFormat,
                                         kAudioUnitScope_Input, i,
                                         clientFormat.streamDescription, sizeof(AudioStreamBasicDescription)),
                    "cant set the input scope format on bus[i]");
         
     }
-    
+
+        
+
+        
+
     double sample = kGraphSampleRate;
     CheckError(AudioUnitSetProperty(_mMixer, kAudioUnitProperty_SampleRate,
                                     kAudioUnitScope_Output, 0,&sample , sizeof(sample)),
@@ -292,7 +358,19 @@ static OSStatus renderInput(void *inRefCon,
                             UInt32 inBusNumber, UInt32 inNumberFrames,
                             AudioBufferList *ioData)
 {
-    SoundBufferPtr sndbuf = (SoundBufferPtr)inRefCon;
+    MixerVoiceHandle *THIS=(__bridge MixerVoiceHandle*)inRefCon;
+    if (inBusNumber == 4) {
+
+       OSStatus status = AudioUnitRender(THIS->_mOutput,
+                        ioActionFlags,
+                        inTimeStamp,
+                        1,
+                        inNumberFrames,
+                        ioData);
+        
+        return status;
+    }
+    SoundBufferPtr sndbuf = (SoundBufferPtr)THIS->_mSoundBufferP;
     
     UInt32 sample = sndbuf[inBusNumber].sampleNum;      // frame number to start from
     UInt32 bufSamples = sndbuf[inBusNumber].numFrames;  // total number of frames in the sound buffer
@@ -324,4 +402,103 @@ static OSStatus renderInput(void *inRefCon,
     
     return noErr;
 }
+
+static OSStatus playUnitInputCallback(void *inRefCon,
+                                      
+                                      AudioUnitRenderActionFlags *ioActionFlags,
+                                      const AudioTimeStamp *inTimeStamp,
+                                      UInt32 inBusNumber,
+                                      UInt32 inNumberFrames,
+                                      AudioBufferList *ioData) {
+    
+    
+    //使用flag判断数据渲染前后，是渲染后状态则有数据可取
+    if ((*ioActionFlags) & kAudioUnitRenderAction_PostRender){
+         MixerVoiceHandle *THIS=(__bridge MixerVoiceHandle*)inRefCon;
+        @synchronized (THIS) {
+            if (THIS->_recordMixPCM) {
+                CheckError(ExtAudioFileWrite(THIS->_fp,inNumberFrames, ioData),
+                               "cant write audio data to file") ;
+            }
+        }
+    }
+    
+    
+    return noErr;
+}
+
+
+-(void)startWriteMixedPCM{
+    @synchronized (self) {
+        if (_recordMixPCM == YES) {
+            return;
+        }
+    }
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    
+    
+    NSString *audioPath = [NSString stringWithFormat:@"%@/%@.m4a",documentsDirectory,[NSDate date]];
+    NSLog(@"%@",audioPath);
+    NSURL *url = [NSURL fileURLWithPath:audioPath];
+    NSLog(@"%@",url);
+    
+    
+    
+    _fp = NULL;
+    
+    AudioStreamBasicDescription destinationFormat;
+    memset(&destinationFormat, 0, sizeof(destinationFormat));
+    destinationFormat.mChannelsPerFrame = 1;
+    destinationFormat.mFormatID = kAudioFormatMPEG4AAC;
+    UInt32 size = sizeof(destinationFormat);
+    CheckError(AudioFormatGetProperty(kAudioFormatProperty_FormatInfo, 0, NULL, &size, &destinationFormat),"get kAudioFormatProperty_FormatInfo error");
+    
+    
+    
+    
+    CheckError(ExtAudioFileCreateWithURL((__bridge CFURLRef)url,
+                                         kAudioFileM4AType,
+                                         &destinationFormat,
+                                         NULL,
+                                         kAudioFileFlags_EraseFile,
+                                         &_fp),
+               "cant create output audio file");
+    
+    
+    UInt32 codec = kAppleHardwareAudioCodecManufacturer;
+    size = sizeof(codec);
+    CheckError(ExtAudioFileSetProperty(_fp,
+                                       kExtAudioFileProperty_CodecManufacturer,
+                                       size,
+                                       &codec),"set codec error");
+    
+
+    CheckError(ExtAudioFileSetProperty(_fp,kExtAudioFileProperty_ClientDataFormat,sizeof(AudioStreamBasicDescription),&_mAudioFormat),"ExtAudioFileSetProperty error");
+   
+    sem = dispatch_semaphore_create(0);
+    @synchronized (self) {
+        _recordMixPCM = YES;
+    }
+    //信号量等待
+    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+    
+
+    ExtAudioFileDispose(_fp);
+    _fp = NULL;
+}
+
+-(void)stopWriteMixedPCM{
+    @synchronized (self) {
+        if (_recordMixPCM == NO) {
+            return;
+        }
+        _recordMixPCM = NO;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_semaphore_signal(sem);
+        });
+    }
+}
+
 @end
